@@ -7,7 +7,7 @@ SQL talk
 - [Transactions](transactions.md)
 - [Vacuuming](vacuum.md)
 - [SQL Injections](injection.md)
-- [Misc Stuff](misc.md)
 - [using the docs](docs.md)
 - [Config Files](config.md)
+- [Misc Stuff](misc.md)
 - [Differences with other databases](diff.md)

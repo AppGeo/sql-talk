@@ -35,4 +35,9 @@ This is the reference I used for the information about joins in this presentatio
 
 # [Reference Section](https://www.postgresql.org/docs/current/reference.html)
 
-This section has in depth descriptions WITH EXAMPLES for all sql keywords and commands.  Forget the exact syntax to insert data, [look it up there](https://www.postgresql.org/docs/current/sql-insert.html) wanna create a table from a select statement [look up Select Into](https://www.postgresql.org/docs/current/sql-selectinto.html), forget the correct syntax for creating an index [look there](https://www.postgresql.org/docs/current/sql-createindex.html)
+This section has in depth descriptions WITH EXAMPLES for all sql keywords and commands.  Forget the exact syntax to insert data, [look it up there](https://www.postgresql.org/docs/current/sql-insert.html) wanna create a table from a select statement [look up Select Into](https://www.postgresql.org/docs/current/sql-selectinto.html), forget the correct syntax for creating an index [look there](https://www.postgresql.org/docs/current/sql-createindex.html).
+
+
+# PostGIS
+
+The key page is [here](https://postgis.net/docs/manual-2.5/reference.html) and lists all the functions you might ever need divided up by type.  Some of them require epsg codes, https://epsg.io is a great place to look them up, but 4326 is usually the one you want.

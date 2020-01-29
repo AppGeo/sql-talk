@@ -53,6 +53,8 @@ lists all the tables
 
 `\c database_name` connect to different database
 
+`\copy { table | ( query ) } { from | to } { 'filename' } [ [ with ] ( option [, …] ) ]` can be used to import and export data, it has a slightly dif
+
 ## shp2pgsql
 
 this is a great tool that comes with postgis that makes it very easy to to bring a shapefile into postgres
@@ -68,3 +70,46 @@ by default it creates a table, but you can do `-d` to drop and recreate or `-a` 
 `-g` is used to specify the geometry field
 
 -S makes it use single geometries instead of multi geometries use this if all the polygons/lines are single part, you can't use it if some are multipart
+
+## Custom functions
+You can define custom functions, I think I've done that once but I can't remember why. You definitely need them if you have code that needs to run on update or on insert (like a trigger).  [The docs](https://www.postgresql.org/docs/12/sql-createfunction.html) have some information on this.
+
+## Computed columns
+
+As of postgres 12 computed columns are called 'generated columns' with the information `GENERATED ALWAYS AS (<expression>) STORED`
+
+```sql
+CREATE TABLE people (
+    height_cm numeric,
+    height_in numeric GENERATED ALWAYS AS (height_cm / 2.54) STORED
+);
+```
+
+You can get more details [in the docs](https://www.postgresql.org/docs/12/ddl-generated-columns.html)
+
+in previous versions you'd have to do complicated stuff with triggers in order to get this result (maybe that's where I used a function before).
+
+That being said if you only need the generated thing in order to do queries on the table, then a computed index might be a better thing for you.
+
+## Bulk data operations
+
+There is a 'copy' command that allows you to copy csv data into and export from a table, to bulk export you can run
+
+```sql
+copy (select * form table) to './file.csv' with csv header force quote *;
+```
+or if you were on a different machine then the database you could change the query to be
+
+```sql
+copy (select * form table) to STDOUT with csv header force quote *;
+```
+
+put it in a file called `file.sql` and run
+
+```bash
+psql -f file.sql > file.csv
+```
+
+(you may or may not need the `force quote *` thingy this was copied from something I had created a couple months ago that needed it).
+
+For inserts I tend to write custom write streams using knex since we often have to do data manipulation at the same time, that's out of scope for this topic, but maybe can be covered in the STREAMS! talk.

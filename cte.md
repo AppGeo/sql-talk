@@ -70,3 +70,19 @@ select * from foo where foo.blah = 'baz';
 would not get that optimization.
 
 By default in 12, if a with statement is use only once it'll just get folded in, though you can tweak this, [the docs](https://www.postgresql.org/docs/current/queries-with.html) are very good and give examples of when you would and wouldn't want this.
+
+## Knex support
+```js
+knex.with('name', knex.raw('text')).select().from('name');
+// or
+
+var query = knex.with('name',(qb) => {
+  qb.select('*').from('books').where('author', 'Test')
+})).select().from('name');
+```
+
+## Order of execution
+
+You don't care
+
+SQL is declarative, you declare what the results you want and the query optimizer goes about figuring out the best way to do it.  If you use explain to view how a query was actually executed it's sometimes very different from how it was written. 
