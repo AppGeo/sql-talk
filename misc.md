@@ -78,6 +78,8 @@ by default it creates a table, but you can do `-d` to drop and recreate or `-a` 
 ## Custom functions
 You can define custom functions, I think I've done that once but I can't remember why. You definitely need them if you have code that needs to run on update or on insert (like a trigger).  [The docs](https://www.postgresql.org/docs/12/sql-createfunction.html) have some information on this.
 
+Guido can speak to this if we have more questions.
+
 ## Computed columns
 
 As of postgres 12 computed columns are called 'generated columns' with the information `GENERATED ALWAYS AS (<expression>) STORED`
@@ -117,3 +119,41 @@ psql -f file.sql > file.csv
 (you may or may not need the `force quote *` thingy this was copied from something I had created a couple months ago that needed it).
 
 For inserts I tend to write custom write streams using knex since we often have to do data manipulation at the same time, that's out of scope for this topic, but maybe can be covered in the STREAMS! talk.
+
+## Limit and Offset for Paging
+
+It might seem like a good idea to do paging by running something like
+
+
+```sql
+-- page 1
+select * from table limit 20
+-- page 2
+select * from table limit 20 offset 20
+-- page 10
+select * from table limit 20 offset 180
+```
+
+this isn't something that postgres is able to optimize away so
+
+```sql
+select * from table limit 20 offset 180
+-- equivalent to
+select * form table limit 200;
+-- and then throwing away the first 180 rows
+```
+this isn't terrible if it's really just 200, but if it was like 2000 that might be a different issue.
+
+there are a couple ways to do this better, if you only need previous and next page, then you can do
+
+```sql
+select * from table order by primary_key limit 20
+```
+
+then remember the key from the last item on the list and when they want to go to the next page
+
+```sql
+select * from table where primary_key > ? order by primary_key limit 20
+```
+
+There are more complex arraignments if you need to be able to page to arbitrary locations and you have a non trivial amount of pages that are probably out of scope for this.
