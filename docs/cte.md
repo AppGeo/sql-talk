@@ -5,7 +5,7 @@ Anyone looking for information on concussions is in the wrong room, I recommend 
 As hinted earlier anyplace you can specify a table by name, you can also specify an expression, meaning you can do something like
 
 ```sql
-Select * from foo;
+Select * from (select something from table where foo = 'bar') as foo;
 ```
 
 Note you must name the expression inside the parentheses.
@@ -85,4 +85,4 @@ var query = knex.with('name',(qb) => {
 
 You don't care
 
-SQL is declarative, you declare what the results you want and the query optimizer goes about figuring out the best way to do it.  If you use explain to view how a query was actually executed it's sometimes very different from how it was written. 
+SQL is declarative, you declare what the results you want and the query optimizer goes about figuring out the best way to do it.  If you use explain to view how a query was actually executed it's sometimes very different from how it was written.
