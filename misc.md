@@ -37,6 +37,10 @@ $$foo$$;
 $blahblahblah$foo$blahblahblah$;
 ```
 
+## Environmental variables
+
+You can avoid specifying passwords or config in any sort of config and instead pass them in environmental variables, very handy when using app engine or kubernetes as, helpful ones are `PGHOST`, `PGDATABASE`, `PGUSER`, `PGPASSWORD` and `PGSSLMODE`
+
 ## psql
 
 psql is the command line interface for using postgres, some good tricks
