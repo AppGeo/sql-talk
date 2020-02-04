@@ -157,3 +157,21 @@ select * from table where primary_key > ? order by primary_key limit 20
 ```
 
 There are more complex arraignments if you need to be able to page to arbitrary locations and you have a non trivial amount of pages that are probably out of scope for this.
+
+## Foreign Keys
+
+A Foreign key constraint means that you are saying that any key a certain column in this table MUST match a key in aa column in a different table.
+
+One nice thing you can specifying when creating a foreign key is the `on delete cascade` option which says that when the key I'm referencing is deleted, also delete me.
+
+The key being referenced must have a `unique` or `primary key` constraint placed on them, and both of those automatically create indexes meaning the referenced key will always have an index.
+
+## Views
+
+Views are like with statements that have been defined globally in the database and can be treated for the purpose of selects statements to be just like tables.
+
+Other cool things:
+
+If a view only has one table it calls from, doesn't have any aggregates and some other things then you can actually use it to update and insert data and postgres will write it to the table that is referenced.
+
+Materialized views are views where the output is saved to disk.  They don't automatically update when the tables they are based on are updated, but there is a command to refresh them that will do so (this is similar to creating a table based on a query, but postgres saves the query that created it)

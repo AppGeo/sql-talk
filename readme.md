@@ -9,6 +9,7 @@ SQL talk
 - [SQL Injections](docs/injection.md)
 - [Using the Docs](docs/docs.md)
 - [Config Files](docs/config.md)
-- [Misc Stuff](docs/misc.md)
 - [Differences with Other Databases](docs/diff.md)
+- [Misc Stuff](docs/misc.md)
 - [Query References](docs/anatomy.md)
+- Schema design and data types: Subsequent talk with Ross and Calvin
