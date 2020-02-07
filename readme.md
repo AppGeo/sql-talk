@@ -12,5 +12,6 @@ SQL talk
 - [Differences with Other Databases](docs/diff.md)
 - [Misc Stuff](docs/misc.md)
 - [Query References](docs/anatomy.md)
+- [Code Snipits](docs/snipits.md)
 - Schema design and data types: Subsequent talk with Ross and Calvin
 - Roles and privileges: Maybe another talk from peter

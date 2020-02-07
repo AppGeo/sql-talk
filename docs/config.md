@@ -12,10 +12,12 @@ Config can be reloaded with zero down time with `sudo pg_ctlcluster <version> ma
 
 `/etc/postgresql/<version>/main/pg_hba.conf` has where you can white list various ips
 
+```
 ' TYPE    ' DATABASE       ' USER   ' ADDRESS         ' METHOD '
 '---------'----------------'--------'-----------------'--------'
 ' hostssl ' all            ' calvin ' 20.256.17.22/32 ' md5    '
 ' hostssl ' all            ' calvin ' 256.16.0.0/14   ' md5    '
+```
 
 The top row means users named speed with that IP address can access all databases via ssl with a password
 
