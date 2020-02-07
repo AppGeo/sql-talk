@@ -5,6 +5,8 @@
 ```js
 const {Client} = require('pg');
 const escape = require('pg-escape');
+const copyFrom = require('pg-copy-streams').from;
+
 
 const client = new Client({
   connectionString: connectionString,
