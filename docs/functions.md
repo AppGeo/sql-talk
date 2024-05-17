@@ -84,4 +84,9 @@ execute $cwm$update challenges
 
 `$cwm$` is a string delimiter I chose to avoid clashing with the outer $$ in the function.
 
+## other notes
+
+- Tables are types so if you pass `tablename.*` to a function, the tables parameter type can just be `tablename` its the same for variables you declare and returns
+- you can loop through arrays, remeber to declare the loop variable then its `foreach x in array array_name loop ... end loop;`
+
 [^1]: only a sith deal in absolutes, if you have good reason to do a non trigger function that takes these problems into account, don't let this stop you.

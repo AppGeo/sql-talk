@@ -86,3 +86,36 @@ var query = knex.with('name',(qb) => {
 You don't care
 
 SQL is declarative, you declare what the results you want and the query optimizer goes about figuring out the best way to do it.  If you use explain to view how a query was actually executed it's sometimes very different from how it was written.
+
+
+## Query planner
+
+The query planner that decides how to run the query is very smart, except when it's dumb.  If you are doing a with statement where you select from a large table and latter join it to a table 
+
+i.e. 
+
+```sql
+with something_big as (
+  select id,  json_agg(big_table) AS json from big_table
+)
+select small_table.*, something_big.json from
+small_table, something_big
+where small_table.some_id = something_big.id
+and small_table.id = 4;
+```
+
+You'd think the analyzer would be smart enough to only choose the rows in  big_table that match but you might have to do 
+
+```sql
+with something_big as (
+  select id,  json_agg(big_table) AS json from big_table where id in (
+    select some_id from small_table where id = 4
+  )
+)
+select small_table.*, something_big.json from
+small_table, something_big
+where small_table.some_id = something_big.id
+and small_table.id = 4;
+```
+
+despite to reads from small_table this can be WAYYYY faster.

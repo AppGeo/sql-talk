@@ -36,3 +36,7 @@ vacuum (analyze, full, verbose) TABLE_NAME;
 ```
 
 And remember, there is an autovacuum process that is turned on by default so if you're just doing regular stuff you shouldn't need to touch this.
+
+## analyze
+
+If you are adding in and deleting lots of rows you may need to periodically run `vacuum analyze` or `vacuum (analyze, verbose)` (they do the same thing but the 2nd form gives you more feedback).  If you don't the query planner might have some out dated info about the table and make some stupid decisions. 
