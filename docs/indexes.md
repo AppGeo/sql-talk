@@ -113,6 +113,17 @@ then do a query in knex like
 
 This can be on really any expression and as long as the exact expression is being queried against (and it makes sense to use an index) it will use that, so pre buffered geometries, simplified geometries, fields concatenated together, anything you can imagine.
 
+### Colation and Operator Classes 
+
+Colation effects the order rows are sorted in, besides the obvious of `order by` it also effects things like `<`, `>`, `>=`, `<=`.  Colation in text is a little more complicated then just comparing byte by byte because unicode allows multiple different ways to encode the same string (e.g. é vs é), this is why by default `starts_with` and `like 'thing%` don't work by default in the index unless you create the index with `text_pattern_ops` e.g.
+
+```js
+create index IDX_NAME on TABLE (lower(COLUMN) text_pattern_ops);
+
+```
+
+though this breaks colation so you might need two indeces on the table, one with pattern ops and one with the default one.
+
 ### Multi Column Indexes
 
 By default postgres can only use a single index per query (there are exceptions for parallel joins). But you can use a multi column index for queries that hit multiple columns from left to right
