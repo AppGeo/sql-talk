@@ -32,16 +32,11 @@ await db.rollback();
 ```
 
 ```js
-const trx = await db.transaction();
-try {
+return db.transaction(trx=>{
   const stuff = await trx('table').insert(inputs).returning('something');
   const furtherStuff =  await trx('otherTable').insert(stuff).returning('something');
-  await trx.commit();
   return furtherStuff;
-} catch(error) {
-  await trx.rollback();
-  throw error;
-}
+});
 ```
 
 Transactions add overhead to the database so you don't necessarily want to use them if you don't need them. So if in that example above, if it was ok if data go into `table` but not into `otherTable` then maybe don't use a transactions, but generally if your inserting a bunch of stuff into different tables all at the same time you probably want one.

@@ -76,9 +76,9 @@ By default in 12, if a with statement is use only once it'll just get folded in,
 knex.with('name', knex.raw('text')).select().from('name');
 // or
 
-var query = knex.with('name',(qb) => {
-  qb.select('*').from('books').where('author', 'Test')
-})).select().from('name');
+var query = knex.with('name',
+  knex('books').select('*').where('author', 'Test')
+).select().from('name');
 ```
 
 ## Order of execution
